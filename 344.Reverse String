@@ -1,0 +1,14 @@
+/*
+ * https://leetcode.com/problems/reverse-string
+ */
+
+class Solution {
+public:
+    string reverseString(string s) {
+        std::string res = "";
+        for(auto p = s.end() - 1; p>=s.begin(); --p){
+		res += *p;
+    	}
+    	return res;
+    }
+};
