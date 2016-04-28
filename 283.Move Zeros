@@ -1,0 +1,21 @@
+/*
+ * https://leetcode.com/problems/move-zeroes/
+ */
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        for(auto i = nums.begin(); i < nums.end(); ++i){
+      		if(*i == 0){
+      			for(auto j = nums.end()-1; j > i; --j){
+      				if(*j == 0){
+      					continue;
+      				}
+      				int t = *i;
+      				*i = *j;
+      				*j = t;
+      			}
+      		}
+	      }
+    }
+};
