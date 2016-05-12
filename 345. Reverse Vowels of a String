@@ -1,0 +1,33 @@
+/**
+  * https://leetcode.com/problems/reverse-vowels-of-a-string/
+  */
+
+class Solution {
+public:
+    bool isVowel(char c){
+        const char vowels[] = "aeiouAEIOU";
+        for(int i = 0; i < sizeof(vowels)/sizeof(char); ++i){
+            if(vowels[i] == c){
+                return true;
+            }
+        }
+        return false;
+    }
+    string reverseVowels(string s) {
+        //一个vector储存元音
+        vector<char> charvec;
+        for(char c : s){
+            if(isVowel(c)){
+                charvec.push_back(c);
+            }
+        }
+        int i = 0,n = charvec.size();
+        for(char &c : s){
+            if(isVowel(c)){
+              c = charvec[n-i-1];
+              ++i;  
+            }
+        }
+        return s;
+    }
+};
