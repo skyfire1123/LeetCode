@@ -1,0 +1,32 @@
+/**
+  * https://leetcode.com/problems/happy-number/
+  */
+
+
+
+class Solution {
+public:
+    int digitSquare(int n){
+        int tail = 0,ret = 0;
+        while(n > 0){
+            tail = n%10;
+            ret += tail*tail;
+            n /= 10;
+        }
+        return ret;
+    }
+    bool isHappy(int n) {
+        vector<int> ivec;
+        while(true){
+            ivec.push_back(n);
+            n = digitSquare(n);
+            if(find(ivec.begin(),ivec.end(),n)!=ivec.end()){
+                if(n==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+    }
+};
