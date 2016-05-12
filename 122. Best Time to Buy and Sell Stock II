@@ -1,0 +1,54 @@
+/**
+  * https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+  */
+
+//下面这种方法比较麻烦，但是好处是交易次数较少，交易手续费(如果有的话)低。
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length == 0 || prices.length == 1){
+            return 0;
+        }
+        int buyprice = prices[0], sellprice = prices[0], profit = 0;
+        for(int i = 1; i < prices.length; ++i){
+            if(prices[i] > buyprice || prices[i] < sellprice){
+                //只要价格高于买价或者低于卖价，则更新卖价或者卖出获利。
+                if(prices[i] >= sellprice){
+                    //价格升高，更新卖价。
+                    sellprice = prices[i];
+                    //最后要卖出
+                    if(i == prices.length - 1){
+                        profit += sellprice - buyprice;
+                    }
+                }else{
+                    //当且仅当卖价大于买价且价格降低开始时，卖出股票，同时更新买卖价
+                    profit += sellprice - buyprice;
+                    buyprice = prices[i];
+                    sellprice = prices[i];
+                }
+            }else if(prices[i] < buyprice){
+                //价格降低，更新买卖价。
+                buyprice = prices[i];
+                sellprice = prices[i];
+            }
+        }
+        return profit;
+    }
+}
+
+//下面这种方法比较简洁，但交易次数多
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size() == 0 || prices.size() == 1){
+            return 0;
+        }
+        int buyprice = prices[0], profit = 0;
+        for(int i = 1; i < prices.size(); ++i){
+            if(prices[i] > buyprice){
+                profit += prices[i] - buyprice;
+            }
+            buyprice = prices[i];
+        }
+        return profit;
+    }
+};
