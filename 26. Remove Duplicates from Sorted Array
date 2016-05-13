@@ -6,26 +6,11 @@
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        if(nums.size()==0){
-            return 0;
-        }
-        int length = nums.size();
-        bool isFirst = true;
-        int prev = 0;
+        if(nums.size()==0) return 0;
         int lastIndex = 0;
-        for(int i = 0; i < nums.size(); ++i){
-            if(isFirst){
-                prev = nums[i];
-                isFirst = false;
-                lastIndex++;
-            }else{
-                if(nums[i] == prev){
-                    --length;
-                }else{
-					prev = nums[lastIndex++] = nums[i];
-                }
-            }
+        for(int i = 1; i < nums.size(); ++i){
+            if(nums[i] != nums[lastIndex]) nums[++lastIndex] = nums[i];
         }
-        return length;
+        return lastIndex + 1;
     }
 };
