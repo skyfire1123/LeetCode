@@ -1,0 +1,27 @@
+/**
+  * https://leetcode.com/problems/remove-element/
+  */
+
+public class Solution {
+    public boolean moveElement(int[] nums, int index){
+        boolean ret = false;
+        int temp = nums[index];
+        for(int i = index; i < nums.length - 1; ++i){
+            nums[i] = nums[i+1];
+            ret =  true;
+        }
+        //important!!! in case of the last number equals the val!!!
+        nums[nums.length-1] = temp + 1;
+        return ret;
+    }
+    public int removeElement(int[] nums, int val) {
+        int length = nums.length;
+        for(int i = 0; i < nums.length; ++i){
+            if(nums[i] == val){
+                if(moveElement(nums,i)) i--;
+                length--;
+            }
+        }
+        return length;
+    }
+}
