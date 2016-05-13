@@ -1,0 +1,45 @@
+/** 
+  * https://leetcode.com/problems/implement-queue-using-stacks/
+  */
+
+class Queue {
+public:
+    stack<int> in;
+    stack<int> out;
+    // Push element x to the back of queue.
+    void push(int x) {
+        in.push(x);
+    }
+
+    // Removes the element from in front of queue.
+    void pop(void) {
+        while(in.size() > 1){
+            out.push(in.top());
+            in.pop();
+        }
+        in.pop();
+        while(out.size() != 0){
+            in.push(out.top());
+            out.pop();
+        }
+    }
+
+    // Get the front element.
+    int peek(void) {
+        while(in.size() > 1){
+            out.push(in.top());
+            in.pop();
+        }
+        int ret = in.top();
+        while(out.size()>0){
+            in.push(out.top());
+            out.pop();
+        }
+        return ret;
+    }
+
+    // Return whether the queue is empty.
+    bool empty(void) {
+        return in.size() == 0;
+    }
+};
