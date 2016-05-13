@@ -1,0 +1,30 @@
+/**
+  * https://leetcode.com/problems/balanced-binary-tree/
+  */
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int maxDepth(TreeNode node){
+        if(node == null){
+            return 0;
+        }
+        return Math.max(maxDepth(node.left),maxDepth(node.right))+1;
+    }
+    public boolean isBalanced(TreeNode root) {
+        if(root == null){
+            return true;
+        }
+        if(Math.abs(maxDepth(root.left)-maxDepth(root.right)) > 1){
+            return false;
+        }
+        return (isBalanced(root.left) && isBalanced(root.right));
+    }
+}
