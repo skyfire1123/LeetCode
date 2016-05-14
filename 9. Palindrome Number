@@ -1,0 +1,22 @@
+/**
+  * https://leetcode.com/problems/palindrome-number/
+  */
+
+class Solution {
+public:
+    int calcDigits(int x){
+        if(x == 0) return 0;
+        return calcDigits(x/10) + 1;
+    }
+    bool isPalindrome(int x) {
+        if(x < 0) return false;
+        if(calcDigits(x) == 0 || calcDigits(x) == 1) return true; 
+        int n = calcDigits(x);
+        for(int begin = n,end = 1; begin > n/2 ; --begin,++end){
+            if((x/(int)pow(10,end-1))%10 != (x/(int)pow(10,begin-1))%10){
+                return false;
+            }
+        }
+        return true;
+    }
+};
