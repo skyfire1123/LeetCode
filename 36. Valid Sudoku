@@ -1,0 +1,60 @@
+/**
+  * https://leetcode.com/problems/valid-sudoku/
+  */
+
+class Solution {
+public:
+    bool checkValid(int *row,int size){
+        int sum = 0;
+        for(int i = 0; i < 9; ++i){
+            sum += row[i];
+        }
+        return sum == size;
+    }
+    bool checkLine(vector<vector<char>>& board,int lineIndex,bool isRow){
+        int line[9] = {0};
+        int size = 0;
+        for(int i = 0; i < 9; ++i){
+            if(isRow){
+                if(board[lineIndex][i] != '.'){
+                    line[board[lineIndex][i]-'1'] = 1;
+                    ++size;
+                }
+            }else{
+                if(board[i][lineIndex]!='.'){
+                    line[board[i][lineIndex]-'1'] = 1;
+                    ++size;
+                }
+            }
+        }
+        return checkValid(line,size);
+    }
+    bool checkBlock(vector<vector<char>>& board,int rowIndex,int columnIndex){
+        int block[9] = {0};
+        int size = 0;
+        for(int i = 0; i < 3; ++i){
+            for(int j = 0; j < 3; ++j){
+                if(board[rowIndex+i][columnIndex+j] != '.'){
+                    block[board[rowIndex+i][columnIndex+j]-'1'] = 1;
+                    ++size;
+                }
+            }
+        }
+        return checkValid(block,size);
+    }
+    bool isValidSudoku(vector<vector<char>>& board) {
+        for(int i = 0; i < 9; ++i){
+            if(!checkLine(board,i,true) || !checkLine(board,i,false)){
+                return false;
+            }
+            if(i%3 == 0){
+                for(int j = 0; j < 3; ++j){
+                    if(!checkBlock(board,i,j*3)){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+};
