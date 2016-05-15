@@ -1,0 +1,36 @@
+/**
+  * https://leetcode.com/problems/implement-stack-using-queues/
+  */
+
+class Stack {
+public:
+    queue<int> in;
+    queue<int> out;
+    // Push element x onto stack.
+    void push(int x) {
+        in.push(x);
+    }
+
+    // Removes the element on top of the stack.
+    void pop() {
+        while(in.size() > 1){
+            out.push(in.front());
+            in.pop();
+        }
+        in.pop();
+        while(out.size() > 0){
+            in.push(out.front());
+            out.pop();
+        }
+    }
+
+    // Get the top element.
+    int top() {
+        return in.back();
+    }
+
+    // Return whether the stack is empty.
+    bool empty() {
+        return in.empty();
+    }
+};
