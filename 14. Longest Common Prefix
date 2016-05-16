@@ -1,0 +1,34 @@
+/**
+  * https://leetcode.com/problems/longest-common-prefix/
+  */
+
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string ret = "";
+        if(strs.empty()) return ret;
+        int shortest = strs[0].length();
+        for(string s : strs){
+            if(s == "") return ret;
+            int len;
+            if((len = s.length()) < shortest) shortest = len;
+        }
+        int flag = 1;
+        for(int i = 0; i < shortest; ++i){
+            for(int j = 0; j < strs.size(); ++j){
+                if(strs[j][i] != strs[0][i]){
+                    flag = 0;
+                    cout << strs[j][i] << endl;
+                    cout << strs[0][i] << endl;
+                }
+            }
+            if(flag){
+                ret += strs[0][i];
+            }else{
+                break;
+            }
+        }
+        return ret;
+    }
+};
