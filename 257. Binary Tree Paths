@@ -1,0 +1,51 @@
+/**
+  * https://leetcode.com/problems/binary-tree-paths/
+  */
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> ret;
+        if(root == nullptr) return ret;
+        string str = "";
+        str += to_string(root->val);
+        if(root->left == nullptr && root->right == nullptr){
+            vector<string> strvec;
+            strvec.push_back(str);
+            return strvec;
+        }
+        str += "->";
+        if(root->left == nullptr){
+            vector<string> right = binaryTreePaths(root->right);
+            for(string &s:right){
+                s = str + s;
+            }
+            return right;
+        }
+        if(root->right == nullptr){
+            vector<string> left = binaryTreePaths(root->left);
+            for(string &s:left){
+                s = str + s;
+            }
+            return left;
+        }
+        vector<string> right = binaryTreePaths(root->right);
+        vector<string> left = binaryTreePaths(root->left);
+        for(string &s: left) s = str + s;
+        for(string &s : right){
+            s = str + s;
+            left.push_back(s);
+        }
+        return left;
+    }
+};
