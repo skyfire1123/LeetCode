@@ -25,19 +25,13 @@ public:
             return strvec;
         }
         str += "->";
+        if(root->right == nullptr && root->left !=nullptr)  swap(root->right,root->left);
         if(root->left == nullptr){
             vector<string> right = binaryTreePaths(root->right);
             for(string &s:right){
                 s = str + s;
             }
             return right;
-        }
-        if(root->right == nullptr){
-            vector<string> left = binaryTreePaths(root->left);
-            for(string &s:left){
-                s = str + s;
-            }
-            return left;
         }
         vector<string> right = binaryTreePaths(root->right);
         vector<string> left = binaryTreePaths(root->left);
