@@ -1,0 +1,40 @@
+/**
+  * https://leetcode.com/problems/valid-parentheses/
+  */
+
+class Solution {
+public:
+    bool isLeft(char c){
+        switch(c){
+            case '(': return true;
+            case '{': return true;
+            case '[': return true;
+        }
+        return false;
+    }
+    bool isMatch(char a,char b){
+        if((isLeft(a) && isLeft(b)) || (!isLeft(a) && !isLeft(b))) return false;
+        if(!isLeft(a)) swap(a,b);
+        if(a == '(' && b == ')') return true;
+        if(a == '{' && b == '}') return true;
+        if(a == '[' && b == ']') return true;
+        return false;
+        
+    }
+    bool isValid(string s) {
+        if(s.empty()) return true;
+        stack<char> ist;
+        int flag = 1;
+        for(int i = 0; i < s.size(); ++i){
+            if(isLeft(s[i])){
+                ist.push(s[i]);
+            }else{
+                if(ist.empty() || !isMatch(ist.top(),s[i])){
+                    return false;
+                };
+                ist.pop();
+            }
+        }
+        return ist.empty()? true : false;
+    }
+};
