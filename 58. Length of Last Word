@@ -1,0 +1,13 @@
+/**
+  * https://leetcode.com/problems/length-of-last-word/
+  */
+
+public class Solution {
+    public int lengthOfLastWord(String s) {
+        if(s == null) return 0;
+        String[] words = s.split(" ");
+        int len = words.length;
+        if(len == 0) return 0;
+        return words[len - 1].length();
+    }
+}
