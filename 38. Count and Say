@@ -1,0 +1,38 @@
+/**
+  * https://leetcode.com/problems/count-and-say/
+  */
+public class Solution {
+    String toNext(String s){
+        String ret = "";
+        char cur,prev = s.charAt(0);
+        int count = 0;
+        for(int i = 0; i < s.length(); ++i){
+            cur = s.charAt(i);
+            if(cur == prev){
+                count++;
+            }
+            if(cur != prev ){
+                ret += count;
+                ret += prev;
+                prev = cur;
+                count = 1;
+            }
+            if(i == s.length()-1){
+                ret += count;
+                ret += cur;
+            }
+        }
+        return ret;
+    }
+    public String countAndSay(int n) {
+        String str = "";
+        for(int i = 1; i <= n; ++i){
+            if(i == 1){
+                str += 1;
+                continue;
+            }
+            str = toNext(str);
+        }
+        return str;
+    }
+}
