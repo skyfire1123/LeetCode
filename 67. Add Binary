@@ -1,0 +1,41 @@
+/**
+  * https://leetcode.com/problems/add-binary/
+  */
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        stack<char> ast,bst,retst;
+        for(char c : a) ast.push(c);
+        for(char c : b) bst.push(c);
+        int flag = 0; //表示是否有进位
+        while(!ast.empty() && !bst.empty()){
+            int sum = (ast.top()-'0') + (bst.top()-'0') + flag;
+            ast.pop();
+            bst.pop();
+            switch(sum){
+                case 0: retst.push('0'); break;
+                case 1: retst.push('1'); flag = 0; break;
+                case 2: retst.push('0'); flag = 1; break;
+                case 3: retst.push('1'); flag = 1; break;
+            }
+        }
+        if(ast.empty()) swap(ast,bst);
+        while(!ast.empty()){
+            int sum = (ast.top() - '0') + flag;
+            cout << sum << endl;
+            ast.pop();
+            switch(sum){
+                case 0: retst.push('0'); break;
+                case 1: retst.push('1'); flag = 0; break;
+                case 2: retst.push('0'); flag = 1; break;
+            }
+        }
+        if(flag) retst.push('1');
+        string s = "";
+        while(!retst.empty()){
+            s += retst.top();
+            retst.pop();
+        }
+        return s;
+    }
+};
