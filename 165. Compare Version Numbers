@@ -1,0 +1,39 @@
+/**
+  * https://leetcode.com/problems/compare-version-numbers/
+  */
+
+public class Solution {
+    public int toNum(String str){
+        if(str == null || str == "" || str == "0") return 0;
+        int digit = str.length();
+        int ret = 0;
+        for(int i = 0; i < digit; ++i){
+            ret += (str.charAt(i)-'0')*Math.pow(10,digit-i-1);
+        }
+        System.out.println(ret);
+        return ret;
+    }
+    public int compareVersion(String version1, String version2) {
+        String[] ver1 = version1.split("\\.");
+        String[] ver2 = version2.split("\\.");
+        int len1 = ver1.length;
+        int len2 = ver2.length;
+        int min = Math.min(len1,len2);
+        for(int i = 0; i < min; ++i){
+            if(toNum(ver1[i]) > toNum(ver2[i])) return 1;
+            if(toNum(ver1[i]) < toNum(ver2[i])) return -1;
+        }
+        if(len2 == len1) return 0;
+        if(len1 == min){
+            for(int i = min; i < len2; ++i){
+                if(toNum(ver2[i]) != 0) return -1;
+            }
+        }
+        if(len2 == min){
+            for(int i = min; i < len1; ++i){
+                if(toNum(ver1[i]) != 0) return 1;
+            }
+        }
+        return 0;
+    }
+}
