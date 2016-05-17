@@ -1,0 +1,25 @@
+/**
+  *https://leetcode.com/problems/valid-palindrome/
+  */
+  
+class Solution {
+public:
+    bool isAlphabet(char c){
+        return ((c-'a' >-1 && c-'a' <26) || (c-'A' >-1 && c-'A' <26) || (c - '0' >-1 && c - '0' <10));
+    }
+    bool isEqual(char a,char b){
+        return tolower(a) == tolower(b); 
+    }
+    bool isPalindrome(string s) {
+        int lens = s.size();
+        if(lens == 0||lens == 1) return true;
+        for(int i = 0,j = lens-1; i < j; ++i,--j){
+            //check if belongs to alphabat
+            while(!isAlphabet(s[i]) && i < j) ++i;
+            while(!isAlphabet(s[j]) && i < j) --j;
+            //check if equals
+            if(!isEqual(s[i],s[j])) return false;
+        }
+        return true;
+    }
+};
