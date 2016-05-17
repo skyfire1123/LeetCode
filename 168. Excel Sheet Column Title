@@ -1,0 +1,27 @@
+/**
+  * https://leetcode.com/problems/excel-sheet-column-title/
+  */
+
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string s = "";
+        stack<char> istack;
+        int count = 1;
+        while(n > 0){
+            if(n%26!=0){
+                istack.push('@' + n%26);
+            }else{
+                istack.push('Z');
+            }
+            int temp = n;
+            n/=26;
+            if(temp%26==0) n -= 1;
+        }
+        while(!istack.empty()){
+            s += istack.top();
+            istack.pop();
+        }
+        return s;
+    }
+};
