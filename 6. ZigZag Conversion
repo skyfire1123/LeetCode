@@ -1,0 +1,38 @@
+/**
+  * https://leetcode.com/problems/zigzag-conversion/
+  */
+
+
+public class Solution {
+    public String convert(String s, int numRows) {
+        int lens = s.length();
+        if(numRows == 1 || numRows >= lens) return s;
+        int lenseq = 2*numRows - 2;
+        int numofseqs = lens/lenseq;
+        String[] seqs = new String[numofseqs + 1];
+        for(int i = 0; i < numofseqs + 1; ++i){
+            seqs[i] = "";
+        }
+        for(int i = 0; i < lens; ++i){
+            seqs[i/lenseq] += s.charAt(i);
+        }
+        String ret = "";
+        for(int j = 0; j <= numRows-1; ++j){
+            for(int i = 0; i < numofseqs + 1 && seqs[i]!=""; ++i){
+                if(j == 0 || j == numRows-1){
+                    if(j < seqs[i].length()){
+                        ret += seqs[i].charAt(j); 
+                    }
+                }else{
+                    if(j < seqs[i].length()){
+                        ret += seqs[i].charAt(j);
+                    }
+                    if(lenseq - j < seqs[i].length()){
+                        ret += seqs[i].charAt(lenseq-j);
+                    }
+                }    
+            }
+        }
+        return ret;
+    }
+}
