@@ -1,0 +1,33 @@
+/**
+  * https://leetcode.com/problems/reverse-integer/
+  */
+
+class Solution {
+public:
+    int reverse(int x) {
+        int flag = 1;
+        if(x == -2147483648) return 0;
+        if(x < 0){
+            x = -x;
+            flag = -flag;
+        }
+        
+        if(x < 10) return flag*x;
+        queue<int> iq;
+        
+        while(x > 0){
+            iq.push(x%10);
+            x /= 10;
+        }
+        int ret = 0;
+        int digit = iq.size();
+        while(iq.size() != 1){
+            ret *= 10;
+            ret += iq.front();
+            iq.pop();
+        }
+        if(ret*10/10 != ret) return 0;
+        ret = ret*10 + iq.front();
+        return flag*ret;
+    }
+};
