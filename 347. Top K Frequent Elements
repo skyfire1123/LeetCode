@@ -1,0 +1,34 @@
+/**
+  * https://leetcode.com/problems/top-k-frequent-elements/
+  */
+
+
+public class Solution {
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        for(int i : nums){
+            if(map.containsKey(i)){
+                map.put(i,map.get(i)+1);
+            }else{
+                map.put(i,1);
+            }
+        }
+        int lens = nums.length;
+        List<Integer>[] list = new ArrayList[lens+1];
+        for(Integer key: map.keySet()){
+            Integer val = map.get(key);
+            if(list[val]==null) list[val] = new ArrayList();
+            list[val].add(key);
+        }
+        List<Integer> ans = new ArrayList<Integer>();
+        for(int i = lens; k > 0 && i > -1; --i){
+            if(list[i] != null ){
+                for(Integer t: list[i]){
+                    ans.add(t);
+                    --k;
+                }
+            }
+        }
+        return ans;
+    }
+}
