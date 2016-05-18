@@ -1,0 +1,25 @@
+/**
+  *https://leetcode.com/problems/product-of-array-except-self/
+  */
+
+public class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int lens = nums.length;
+        //left[i] represents the product before index i;
+        int[] left = new int[lens];
+        left[0] = 1;
+        for(int i = 1; i < lens; ++i) left[i] = left[i-1]*nums[i-1];
+        //right[i] represents the product after index i;
+        int[] right = new int[lens];
+        right[lens-1] = 1;
+        for(int i = lens - 2; i > -1; --i) right[i] = right[i+1]*nums[i+1];
+        
+        int[] output = new int[lens];
+        output[0] = right[0];
+        output[lens-1] = left[lens-1];
+        for(int i = 1; i < lens-1; ++i){
+            output[i] = left[i]*right[i];
+        }
+        return output;
+    }
+}
