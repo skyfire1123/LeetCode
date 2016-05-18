@@ -1,0 +1,10 @@
+/**
+  * https://leetcode.com/problems/bulb-switcher/
+  */
+
+public class Solution {
+    public int bulbSwitch(int n) {
+    //只有奇数个因数的序号的灯泡最终能保持亮起，只有平方数的因数有奇数个，小于等于n的平方数有(int)sqrt(n)个.
+        return (int)Math.sqrt(n);
+    }
+}
