@@ -1,0 +1,26 @@
+/**
+  * https://leetcode.com/problems/counting-bits/
+  */
+
+public class Solution {
+    public int[] countBits(int num) {
+        int[] ret = new int[num+1];
+        ret[0] = 0 ;
+        if(num == 0) return ret;
+        ret[1] = 1;
+        if(num == 1) return ret;
+        ret[2] = 1;
+        if(num == 2) return ret;
+        int count = 1,point = 2;
+        for(int i = 3; i < num+1; ++i){
+            if(count == point){
+                ret[i] = count = 1;
+                point *= 2;
+            }else{
+                ret[i] = ret[count] + ret[point];
+                count++;
+            }
+        }
+        return ret;
+    }
+}
