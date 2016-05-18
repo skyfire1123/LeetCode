@@ -1,0 +1,27 @@
+/**
+  * https://leetcode.com/problems/single-number-iii/
+  */
+
+public class Solution {
+    public int[] singleNumber(int[] nums) {
+        Set<Integer> set = new HashSet<Integer>();
+        for(int i = 0; i < nums.length; ++i){
+            if(set.contains(nums[i])){
+                set.remove(nums[i]);
+            }else{
+                set.add(nums[i]);
+            }
+        }
+        Boolean isFirst = true;
+        int[] ret = new int[2];
+        for(Integer i:set){
+            if(isFirst){
+                ret[0] = i;
+               isFirst = false;
+            }else{
+                ret[1] = i;
+            }
+        }
+        return ret;
+    }
+}
