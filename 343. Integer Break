@@ -7,6 +7,7 @@ public class Solution {
         if(n<4) return n-1;
         if(n==4) return n;
         int ret = 1;
+        //利用均值不等式和求导可以知道当每个数x=e时取得最大值，所以令x=3
         while(n!=0 && n!=2 && n!=4){
             ret *= 3;
             n -= 3;
