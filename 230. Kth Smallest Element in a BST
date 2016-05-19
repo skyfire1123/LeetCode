@@ -1,0 +1,32 @@
+/**
+  * https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+  */
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        stack<TreeNode*> data;
+        int ret = 0;
+        while(k>0){
+            while(root){
+                data.push(root);
+                root = root->left;
+            }
+            root = data.top();
+            data.pop();
+            ret = root->val;
+            k--;
+            root = root->right;
+        }
+        return ret;
+    }
+};
