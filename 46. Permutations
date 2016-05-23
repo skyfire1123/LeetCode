@@ -4,15 +4,6 @@
 
 class Solution {
 public:
-    vector<int> removeIndex(vector<int>& nums, int index){
-        vector<int> ret;
-        for(int i = 0; i < nums.size(); ++i){
-            if(i != index){
-                ret.push_back(nums[i]);
-            }
-        }
-        return ret;
-    }
     vector<vector<int>> permute(vector<int>& nums) {
         vector<vector<int> > ret;
         if(nums.size() < 2){
@@ -20,14 +11,12 @@ public:
             return ret;
         }
         for(int i = 0; i < nums.size(); ++i){
-            vector<int> r = removeIndex(nums,i);
-            vector<vector<int> > pre = permute(r);
+            vector<int> cur = nums;
+            cur.erase(cur.begin()+i);
+            vector<vector<int> > pre = permute(cur);
             for(vector<int> ivec:pre){
-                vector<int> temp;
-                temp.push_back(nums[i]);
-                for(int element: ivec){
-                    temp.push_back(element);
-                }
+                vector<int> temp = ivec;
+                temp.insert(temp.begin(),nums[i]);
                 ret.push_back(temp);
             }
         }
