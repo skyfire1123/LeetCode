@@ -1,0 +1,27 @@
+/**
+  * https://leetcode.com/problems/container-with-most-water/
+  */
+
+public class Solution {
+    public int maxArea(int[] height) {
+        int lens = height.length;
+        if(height == null || lens == 1) return 0;
+        if(lens == 2) return Math.min(height[0],height[1]);
+        int start = 0;
+        int end = lens - 1;
+        int max = 0;
+        int cur = 0;
+        while(start < end){
+            cur = (end-start)*Math.min(height[start],height[end]);
+            if(cur > max){
+                max = cur;
+            }
+            if(height[start]>height[end]){
+                end--;
+            }else{
+                start++;
+            }
+        }
+        return max;
+    }
+}
