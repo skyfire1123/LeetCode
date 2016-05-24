@@ -1,0 +1,43 @@
+/**
+  * https://leetcode.com/problems/binary-search-tree-iterator/
+  */
+  
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class BSTIterator {
+public:
+    queue<int> data;
+    BSTIterator(TreeNode *root) {
+        stack<TreeNode*> ist;
+        while(root||!ist.empty()){
+            while(root){
+                ist.push(root);
+                root = root->left;
+            }
+            root = ist.top();
+            ist.pop();
+            data.push(root->val);
+            root = root->right;
+        };
+    }
+
+    /** @return whether we have a next smallest number */
+    bool hasNext() {
+        return !data.empty();
+    }
+
+    /** @return the next smallest number */
+    int next() {
+        if(data.empty()) return 0;
+        int ret = data.front();
+        data.pop();
+        return ret;
+    }
+};
