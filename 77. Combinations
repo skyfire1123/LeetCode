@@ -1,0 +1,31 @@
+/**
+  * https://leetcode.com/problems/combinations/
+  */
+
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int> > ret;
+        if(n < k) return ret;
+        if(k == 1){
+            for(int i = 1; i <= n; ++i){
+                vector<int> temp;
+                temp.push_back(i);
+                ret.push_back(temp);
+            }
+            return ret;
+        }
+        vector<vector<int>> pre = combine(n,k-1);
+        for(vector<int> ivec:pre){
+            int last;
+            if((last = ivec[k-2]) < n){
+                for(int i = last+1; i <= n; ++i){
+                    vector<int> temp = ivec;
+                    temp.push_back(i);
+                    ret.push_back(temp);
+                }
+            }
+        }
+        return ret;
+    }
+};
