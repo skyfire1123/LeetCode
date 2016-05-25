@@ -1,0 +1,21 @@
+/**
+  * https://leetcode.com/problems/longest-increasing-subsequence/
+  */
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int lens = nums.size();
+        if(lens < 2) return lens;
+        vector<int> Dp;
+        Dp.push_back(nums[0]);
+        for(int i = 0; i < lens; ++i){
+            if(nums[i] > Dp[Dp.size()-1]) Dp.push_back(nums[i]);
+            else if(nums[i] < Dp[Dp.size()-1]) {
+                //lower_bound(begin,end,key) 返回第一个大于等于key的位置
+                auto id = lower_bound(Dp.begin(),Dp.end(),nums[i]);
+                *id = nums[i];
+            }
+        }
+        return Dp.size();
+    }
+};
