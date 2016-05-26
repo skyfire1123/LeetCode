@@ -1,0 +1,54 @@
+/**
+  * https://leetcode.com/problems/set-matrix-zeroes/
+  */
+
+public class Solution {
+    public void setZeroes(int[][] matrix) {
+        if(matrix == null) return;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        if(m == 0 || n == 0) return;
+        boolean row0 = false , col0 = false;
+        for(int i = 0; i < m; ++i){
+            for(int j = 0; j < n; ++j){
+                if(i == 0){
+                    if(matrix[i][j] == 0) row0 = true;
+                }
+                if(j == 0){
+                    if(matrix[i][j] == 0) col0 = true;
+                }
+                if(i !=0 && j !=0 && matrix[i][j] == 0){
+                    //清零信息记录到首行和首列中。
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+        for(int i = 1; i < m; ++i){
+            //遍历首列元素,然后让对应的行清零
+            if(matrix[i][0] == 0){
+                for(int j = 1; j < n; ++j){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        for(int j = 1; j < n; ++j){
+            //遍历首行元素，然后让对应的列清零
+            if(matrix[0][j] == 0){
+                for(int i = 1; i < m; ++i){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        
+        if(row0){
+            //首行有0，清零首行
+            for(int j = 0; j < n; ++j) matrix[0][j] = 0;
+        }
+        if(col0){
+            //首列有0，清零首列
+            for(int i = 0; i < m; ++i) matrix[i][0] = 0;
+        }
+    } 
+}
