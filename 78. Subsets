@@ -1,0 +1,26 @@
+/**
+  * https://leetcode.com/problems/subsets/
+  */
+  
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ret;
+        vector<int> emptyset;
+        int n = nums.size();
+        if(n == 0){
+            ret.push_back(emptyset);
+            return ret;
+        }
+        sort(nums.begin(),nums.end());
+        int temp = nums[n-1];
+        nums.erase(--nums.end());
+        vector<vector<int>> pre = subsets(nums);
+        for(vector<int> &ivec : pre){
+            ret.push_back(ivec);
+            ivec.push_back(temp);
+            ret.push_back(ivec);
+        }
+        return ret;
+    }
+};
