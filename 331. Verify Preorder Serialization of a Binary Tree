@@ -1,0 +1,43 @@
+/**
+  * https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/
+  */
+
+public class Solution {
+    public boolean isValidSerialization(String preorder) {
+        if(preorder.length() == 1) return preorder.charAt(0) == '#';
+        if(preorder.charAt(0) == '#') return false;
+        String[] pre = preorder.split(",");
+        Stack<String> ist = new Stack<String>();
+        for(int i = 0; i < pre.length; ++i){
+            ist.push(pre[i]);
+            int n = ist.size();
+            if(n >= 3) helper(ist);
+        }
+        if(ist.size() == 1 && ist.peek().equals("#")) return true;
+        return false;
+    }
+    void helper(Stack<String> ist){
+        String a = "",b = "";
+        if((b += ist.peek()).equals("#")){
+            ist.pop();
+            if((a += ist.peek()).equals("#")){
+                ist.pop();
+                if(!ist.peek().equals("#")){
+                    ist.pop();
+                    ist.push("#");
+                }else{
+                    ist.push(a);
+                    ist.push(b);
+                    return;
+                }
+            }else{
+                ist.push(b);
+                return;
+            }
+        }else{
+            return;
+        }
+        int n = ist.size();
+        if(n >= 3) helper(ist);
+    }
+}
