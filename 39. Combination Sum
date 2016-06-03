@@ -1,0 +1,29 @@
+/**
+  * https://leetcode.com/problems/combination-sum/
+  */
+
+class Solution {
+public:
+    vector<vector<int> > res;
+    vector<int> every;
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        if(candidates.size() == 0) return res;
+        sort(candidates.begin(),candidates.end());
+        dfs(0,0,candidates,target);
+        return res;
+    }
+    void dfs(int start, int sum, vector<int>& candidates,int target){
+        if(sum == target){
+            res.push_back(every);
+            return;
+        }else if(sum > target){
+            return;
+        }else{
+            for(int i = start; i < candidates.size(); ++i){
+                every.push_back(candidates[i]);
+                dfs(i,sum+candidates[i],candidates,target);
+                every.pop_back();
+            }
+        }
+    }
+};
