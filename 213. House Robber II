@@ -1,0 +1,32 @@
+/**
+  * https://leetcode.com/problems/house-robber-ii/
+  */
+
+public class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if(n == 0) return 0;
+        if(n == 1) return nums[0];
+        if(n == 2) return nums[0] > nums[1]? nums[0] : nums[1];
+        if(n == 3) return nums[2] > (nums[0] > nums[1]? nums[0] : nums[1])? nums[2]:(nums[0] > nums[1]? nums[0] : nums[1]);
+        int[] rob0 = new int[n-2];
+        int[] unrob0 = new int[n-1];
+        System.arraycopy(nums,2,rob0,0,n-3);
+        System.arraycopy(nums,1,unrob0,0,n-1);
+        return Math.max(nums[0] + myRob(rob0),myRob(unrob0));
+    }
+    public int myRob(int[] nums) {
+        int ls = nums.length;
+        int[] robmoney = new int[ls];
+        if(ls < 2){
+            return ls == 0? 0 : nums[0];
+        }else{
+            robmoney[0] = nums[0];
+            robmoney[1] = Math.max(nums[0],nums[1]);
+            for(int i = 2; i < ls; ++i){
+                robmoney[i] = Math.max(robmoney[i-1],robmoney[i-2]+nums[i]);
+            }
+        }
+        return robmoney[ls-1];
+    }
+}
