@@ -1,0 +1,46 @@
+/**
+  * https://leetcode.com/problems/insertion-sort-list/
+  */
+  
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        ListNode* pre = head;
+        ListNode* cur = head;
+        while(cur!=NULL){
+            pre = cur;
+            cur = cur->next;
+            if(cur == NULL) break;
+            if((cur->val) < (pre->val)){
+                pre->next = cur->next;
+                cur->next = NULL;
+                //insert
+                ListNode* node = head;
+                ListNode* pre2 = head;
+                while(node!=NULL){
+                    if((node->val) > (cur->val)){
+                        if(node == head){
+                            cur->next = head;
+                            head = cur;
+                        }else{
+                            cur->next = node;
+                            pre2->next = cur;
+                        }
+                        break;
+                    }
+                    pre2 = node;
+                    node = node->next;
+                }
+            }
+        }
+        return head;
+    }
+};
