@@ -1,0 +1,39 @@
+/**
+  * https://leetcode.com/problems/search-for-a-range/
+  */
+
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> ret;
+        int n = nums.size();
+        int left = 0;
+        int right = n-1;
+        int lIndex = -1 , rIndex = -1;
+        while(left < right){
+            int mid = left + (right-left)/2;
+            if(nums[mid] == target){
+                lIndex = mid; rIndex = mid;
+                while(lIndex > 0 && nums[lIndex-1] == target){
+                    lIndex--;
+                }
+                while(rIndex < n-1 && nums[rIndex+1] == target){
+                    rIndex++;
+                }
+                break;
+            }else if(nums[mid] > target){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        if(left == right && nums[left] == target){
+            ret.push_back(left);
+            ret.push_back(left);
+            return ret;
+        }
+        ret.push_back(lIndex);
+        ret.push_back(rIndex);
+        return ret;
+    }
+};
