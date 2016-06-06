@@ -1,0 +1,41 @@
+/**
+  * https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+  */
+  
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n = inorder.size();
+        if(n == 0) return NULL;
+        TreeNode* root = buildTree(inorder,preorder,0,n-1,0,n-1);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& preorder,int inBeg,int inEnd,int preBeg,int preEnd){
+        if(inBeg > inEnd || preBeg > preEnd) return NULL;
+        if(inBeg == inEnd || preBeg == preEnd) return new TreeNode(inorder[inBeg]);
+        int rootVal = preorder[preBeg]; //
+        int left_inBeg = inBeg,left_inEnd = inBeg,right_inBeg = inBeg,right_inEnd = inEnd; 
+        for(int i = inBeg; i <= inEnd; ++i){
+            if(inorder[i] == rootVal){
+                left_inEnd = i - 1;
+                right_inBeg = i + 1;
+                break;
+            }
+        } 
+        int llens = left_inEnd - left_inBeg;
+        int left_preBeg = preBeg+1, left_preEnd = left_preBeg + llens, right_preBeg = left_preEnd + 1, right_preEnd = preEnd;
+        TreeNode* root = new TreeNode(rootVal);
+        root->left = buildTree(inorder,preorder,left_inBeg,left_inEnd,left_preBeg,left_preEnd);
+        root->right = buildTree(inorder,preorder,right_inBeg,right_inEnd,right_preBeg,right_preEnd);
+        return root;
+    }
+};
