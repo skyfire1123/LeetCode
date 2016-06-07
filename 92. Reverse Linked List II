@@ -1,0 +1,39 @@
+/**
+  * https://leetcode.com/problems/reverse-linked-list-ii/
+  */
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        if(m == n) return head;
+        ListNode* preHead = reverseBetween(head,m,n-1);
+        ListNode* preM = NULL, *mNode = preHead, *preN = preHead, *nNode = preHead;
+        int count = 0;
+        for(ListNode* node = preHead; node!=NULL; node=node->next){
+            count++;
+            if(count == m-1) preM = node;
+            if(count == n-1) {
+                preN = node;
+                break;
+            }
+        }
+        nNode = preN->next;
+        if(preM == NULL){
+            preN->next = nNode->next;
+            nNode->next = mNode;
+            return nNode;
+        }
+        mNode = preM->next;
+        preN->next = nNode->next;
+        nNode->next = mNode;
+        preM->next = nNode;
+        return preHead;
+    }
+};
