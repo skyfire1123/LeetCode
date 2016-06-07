@@ -1,0 +1,39 @@
+/**
+  * https://leetcode.com/problems/permutations-ii/
+  */
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> res;
+        int n = nums.size();
+        if(n == 0) return res;
+        if(n == 1){
+            res.push_back(nums);
+            return res;
+        }
+        sort(nums.begin(),nums.end());
+        res.push_back(nums);
+        while(nextPermutation(nums)){
+            res.push_back(nums);
+        }
+        return res;
+    }
+    bool nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int preIndex,curIndex = n-1;
+        while(curIndex != 0){
+            preIndex = curIndex--;
+            if(nums[preIndex] <= nums[curIndex]) continue;
+            for(int i = n-1; i > curIndex; --i){
+                if(nums[i] > nums[curIndex]){
+                    swap(nums[i],nums[curIndex]);
+                    break;
+                }
+            }
+            sort(nums.begin()+curIndex+1, nums.end());
+            return true;
+        }
+        sort(nums.begin(),nums.end());
+        return false;
+    }
+};
