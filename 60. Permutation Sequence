@@ -1,0 +1,20 @@
+/**
+  * https://leetcode.com/problems/permutation-sequence/
+  */
+
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        int f[10] = {1,1,2,6,24,120,720,5040,40320,362880};
+        string s = "123456789";
+        k--;
+        string res = "";
+        for(int i = n; i > 0; --i){
+            int t = k/f[i-1];
+            k %= f[i-1];
+            res += s[t];
+            s.erase(s.begin()+t);
+        }
+        return res;
+    }
+};
