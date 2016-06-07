@@ -1,0 +1,24 @@
+/**
+  * https://leetcode.com/problems/next-permutation/
+  */
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+        if(n < 2) return;
+        int preIndex,curIndex = n-1;
+        while(curIndex != 0){
+            preIndex = curIndex--;
+            if(nums[preIndex] <= nums[curIndex]) continue;
+            for(int i = n-1; i > curIndex; --i){
+                if(nums[i] > nums[curIndex]){
+                    swap(nums[i],nums[curIndex]);
+                    break;
+                }
+            }
+            sort(nums.begin()+curIndex+1, nums.end());
+            return;
+        }
+        sort(nums.begin(),nums.end());
+    }
+};
