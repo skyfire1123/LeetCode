@@ -1,0 +1,30 @@
+/**
+  * https://leetcode.com/problems/anagrams/
+  */
+
+public class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String,ArrayList<String> > map = new HashMap<String, ArrayList<String> >();
+        for(String str: strs){
+            String s = dictSort(str);
+            if(map.containsKey(s)){
+                System.out.println("haha");
+                map.get(s).add(str);
+            }else{
+                ArrayList<String> list = new ArrayList<String>();
+                list.add(str);
+                map.put(s,list);
+            }
+        }
+        List<List<String>> res = new ArrayList<List<String>>();
+        for(String key: map.keySet()){
+            res.add(map.get(key));
+        }
+        return res;
+    }
+    String dictSort(String s){
+        char[] c = s.toCharArray();
+        Arrays.sort(c);
+        return new String(c);
+    }
+}
