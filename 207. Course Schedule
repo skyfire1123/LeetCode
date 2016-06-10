@@ -1,0 +1,33 @@
+/**
+  * https://leetcode.com/problems/course-schedule/
+  */
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+        //建立邻接表
+        list<int> *graph = new list<int>[numCourses];
+        //保存所有结点的入度
+        int degrees[numCourses] = {0};
+        for(pair<int,int> p: prerequisites){
+            ++degrees[p.first];
+            graph[p.second].push_back(p.first);
+        }
+        //q维护入度为0的结点队列 
+        queue<int> q;
+        for(int i = 0; i < numCourses; ++i){
+            if(degrees[i] == 0) q.push(i);
+        }
+        int count = 0;
+        while(!q.empty()){
+            int v = q.front();
+            q.pop();
+            count++;
+            auto iter = graph[v].begin();
+            for(;iter!=graph[v].end();++iter){
+                if(!(--degrees[*iter]))
+                    q.push(*iter);
+            }
+        }
+        return count == numCourses;
+    }
+};
