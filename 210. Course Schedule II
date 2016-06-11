@@ -1,0 +1,35 @@
+/**
+  * https://leetcode.com/problems/course-schedule-ii/
+  */
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector<pair<int, int>>& prerequisites) {
+        vector<int> res;
+        list<int> *graph = new list<int>[numCourses];
+        int degrees[numCourses] = {0};
+        bool visited[numCourses];
+        for(int i = 0; i < numCourses; ++i) visited[i] = false;
+        queue<int> q;
+        for(pair<int,int> p:prerequisites){
+            ++degrees[p.first];
+            graph[p.second].push_back(p.first);
+        }
+        for(int i = 0; i < numCourses; ++i){
+            if(degrees[i] == 0){
+                q.push(i);
+            }
+        }
+        while(!q.empty()){
+            int v = q.front();
+            res.push_back(v);
+            q.pop();
+            for(auto iter = graph[v].begin();iter!=graph[v].end();++iter){
+                if(!--degrees[*iter]){
+                    q.push(*iter);
+                }
+            }
+        }
+        vector<int> empty;
+        return res.size()==numCourses? res:empty;
+    }
+};
