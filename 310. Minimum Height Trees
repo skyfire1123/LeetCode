@@ -1,0 +1,38 @@
+/**
+  * https://leetcode.com/problems/minimum-height-trees/
+  */
+
+class Solution {
+public:
+    vector<int> findMinHeightTrees(int n, vector<pair<int, int>>& edges) {
+        vector<int> leaves;
+        if(!n) return leaves;
+        if(n == 1) {
+            leaves.push_back(0);
+            return leaves;
+        }
+        vector<unordered_set<int>> graph(n);
+        for(pair<int,int> p: edges){
+            graph[p.first].insert(p.second);
+            graph[p.second].insert(p.first);
+        }
+        for(int i = 0; i < n; ++i){
+            if(graph[i].size()==1) leaves.push_back(i);
+        }
+        
+        while(true){
+            vector<int> newleaves;
+            for(int leaf: leaves){
+                for(int i :graph[leaf]){
+                    graph[i].erase(leaf);
+                    if(graph[i].size()==1)
+                        newleaves.push_back(i);
+                }
+            }
+            if(newleaves.size() == 0){
+                return leaves;
+            }
+            leaves = newleaves;
+        }
+    }
+};
