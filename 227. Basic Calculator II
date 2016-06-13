@@ -1,0 +1,45 @@
+/**
+  * https://leetcode.com/problems/basic-calculator-ii/
+  */
+class Solution {
+public:
+    bool isdigits(char c){
+        return c-'0'>=0 && c-'9'<=0;
+    }
+    int calculate(string s) {
+        stack<long long> ist;
+        long long num = 0,ret = 0;
+        char sign = '+';
+        for(int i = 0; i < s.size(); ++i){
+            if(isdigits(s[i]))
+                num = num*10 + (s[i]- '0');
+            if(!isdigits(s[i]) && !isspace(s[i]) || i == s.size()-1){
+                switch(sign){
+                    case '+': 
+                        break;
+                    case '-': 
+                        num = -num; 
+                        break;
+                    case '*':
+                        num *= ist.top();
+                        ist.pop();
+                        break;
+                    case '/':
+                        num = ist.top()/num;
+                        ist.pop();
+                        break;
+                    default:
+                        break;
+                }
+                ist.push(num);
+                num = 0;
+                sign = s[i];
+            }
+        }
+        while(!ist.empty()){
+            ret += ist.top();
+            ist.pop();
+        }
+        return ret;
+    }
+};
