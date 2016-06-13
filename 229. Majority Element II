@@ -1,0 +1,38 @@
+/**
+  * https://leetcode.com/problems/majority-element-ii/
+  */
+
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        vector<int> res;
+        set<int> s;
+        int n = nums.size();
+        if(n < 2) return nums;
+        if(n == 2){
+            if(nums[0]==nums[1]){
+                res.push_back(nums[0]);
+                return res;
+            }else{
+                return nums;
+            }
+        }
+        sort(nums.begin(),nums.end());
+        int cnt = 1;
+        for(int i = 1; i < nums.size(); ++i){
+            if(nums[i] == nums[i-1]){
+                cnt++;
+            }else{
+                cnt = 1;
+            }
+            if(cnt > n/3){
+                s.insert(nums[i]);
+                if(s.size() == 2) break;
+            }
+        }
+        for(int i: s){
+            res.push_back(i);
+        }
+        return res;
+    }
+};
