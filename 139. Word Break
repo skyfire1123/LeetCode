@@ -1,0 +1,23 @@
+/**
+  *https://leetcode.com/problems/word-break/
+  */
+class Solution {
+public:
+    bool wordBreak(string s, unordered_set<string>& wordDict) {
+        int n = s.size();
+        bool Dp[n+1];
+        for(int i = 0; i <= n; ++i){
+            Dp[i] = false;
+        }
+        Dp[0] = true;
+        for(int i = 1; i <= n; ++i){
+            for(int j = 0; j < i; ++j){
+                if(Dp[j] && wordDict.find(s.substr(j,i-j))!=wordDict.end()){
+                    Dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return Dp[n];
+    }
+};
