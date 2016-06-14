@@ -1,0 +1,27 @@
+/**
+  * https://leetcode.com/problems/reconstruct-itinerary/
+  */
+
+class Solution {
+public:
+    unordered_map<string,priority_queue<string,vector<string>,greater<string> > > graph;
+    vector<string> res;
+    void dfs(string str){
+        auto & que = graph[str];
+        while(!que.empty()){
+            string s = que.top();
+            que.pop();
+            dfs(s);
+        }
+        res.push_back(str);
+        
+    }
+    vector<string> findItinerary(vector<pair<string, string>> tickets) {
+        for(pair<string,string> p: tickets){
+            graph[p.first].push(p.second);
+        }
+        dfs("JFK");
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
