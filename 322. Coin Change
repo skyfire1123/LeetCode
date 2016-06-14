@@ -1,0 +1,27 @@
+/**
+  * https://leetcode.com/problems/coin-change/
+  */
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        sort(coins.begin(),coins.end());
+        int n = coins.size();
+        //Dp[i] 表示组成i的最小coin数目,Dp[i] = min{Dp[i-a],Dp[i-b],Dp[i-c],...} + 1 (j=a,b,c... ,i-j >= 0,j belongs to coins)
+        int Dp[amount+1] = {0};
+        Dp[0] = 0;
+        for(int i = 1; i < amount+1; ++i){
+            Dp[i] = -1;
+        }
+        for(int i = 1; i <= amount; ++i){
+            int min = INT_MAX;
+            for(int j = 0; j < n && coins[j] <= i; ++j){
+                if(Dp[i-coins[j]] == -1) continue;
+                if(Dp[i-coins[j]] < min)
+                    min = Dp[i-coins[j]];
+            }
+            if(min != INT_MAX)
+                Dp[i] = min + 1;
+        }
+        return Dp[amount];
+    }
+};
