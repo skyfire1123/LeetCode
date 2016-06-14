@@ -1,0 +1,48 @@
+/**
+  * https://leetcode.com/problems/summary-ranges/
+  */
+
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        vector<string> res;
+        int beg = 0, end = 0;
+        while(end < nums.size()){
+            int start = beg;
+            while(end < nums.size() && nums[++end] == nums[beg++] + 1);
+            res.push_back(toStr(nums[start],nums[end-1]));
+        }
+        return res;
+    }
+    string toStr(int beg, int end){
+        string ret = "";
+        if(beg == end) ret += ntoStr(beg);
+        else {
+            ret += ntoStr(beg);
+            ret += "->";
+            ret += ntoStr(end);
+        }
+        return ret;
+    }
+    string ntoStr(int num){
+        string ret = "";
+        if(num == 0) return ret += '0';
+        if(num == INT_MIN) return ret += "-2147483648";
+        bool isNegative = false;
+        if(num < 0){
+            num = -num;
+            isNegative = true;
+        }
+        if(isNegative) ret += '-';
+        stack<int> digit;
+        while(num > 0){
+            digit.push(num%10);
+            num /= 10;
+        }
+        while(!digit.empty()){
+            ret += (char)(digit.top()+'0');
+            digit.pop();
+        }
+        return ret;
+    }
+};
