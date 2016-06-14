@@ -1,0 +1,22 @@
+/**
+  *https://leetcode.com/problems/maximal-square/
+  */
+
+public class Solution {
+    public int maximalSquare(char[][] matrix) {
+        if(matrix == null || matrix.length == 0) return 0;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] Dp = new int[m][n];
+        //Dp[i][j] 表示以matrix[i][j] == '1'时,以i,j为右下角的最大的正方形的边长,Dp[i][j] = min{Dp[i-1][j-1],Dp[i][j-1],Dp[i-1][j]}+1
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i < m; ++i){
+            for(int j = 0; j < n; ++j){
+                if(i == 0 || j == 0) Dp[i][j] = matrix[i][j]=='0'? 0 : 1;
+                else Dp[i][j] = matrix[i][j]=='0'? 0 : Math.min(Math.min(Dp[i-1][j],Dp[i][j-1]),Dp[i-1][j-1]) + 1;
+                if(Dp[i][j] > max) max = Dp[i][j];
+            }
+        }
+        return max*max;
+    }
+}
