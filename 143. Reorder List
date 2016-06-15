@@ -1,0 +1,59 @@
+/**
+ * https://leetcode.com/problems/reorder-list/
+ */
+ 
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void reorderList(ListNode head) {
+        if(head == null || head.next == null || head.next.next == null) return;
+        ListNode mid = findMid(head);
+        ListNode node;
+        for(node = head; node.next!=mid; node = node.next);
+        node.next = null;
+        ListNode l = head;
+        ListNode r = reverse(mid);
+        mergeList(l,r);
+    }
+    ListNode findMid(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    ListNode reverse(ListNode head){
+        if(head == null || head.next == null) return head;
+        ListNode prev = null;
+        ListNode cur = head;
+        ListNode nxt = head.next;
+        while(nxt!=null){
+            cur.next = prev;
+            prev = cur;
+            cur = nxt;
+            nxt = nxt.next;
+        }
+        cur.next = prev;
+        return cur;
+    }
+    void mergeList(ListNode lhs, ListNode rhs){
+        ListNode l = lhs, r = rhs;
+        while(l!=null && r!=null){
+            ListNode tl = l;
+            ListNode tr = r;
+            l = l.next;
+            r = r.next;
+            tl.next = tr;
+            if(l!=null)tr.next = l;
+            else {tr.next = r; break;}
+        }
+    }
+}
