@@ -1,0 +1,39 @@
+/**
+  * https://leetcode.com/problems/word-ladder/
+  */
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, unordered_set<string>& wordList) {
+        wordList.insert(endWord);
+        queue<string> toVisit;
+        nextNeighbours(beginWord,toVisit,wordList);
+        int dst = 2;
+        while(!toVisit.empty()){
+            //逐层遍历
+            int num = toVisit.size(); //注意此处,需要先保存toVisit的容量,因为循环里会改变toVisit
+            for(auto i = 0; i < num; i++){
+                string s = toVisit.front();
+                toVisit.pop();
+                if(s == endWord) return dst;
+                nextNeighbours(s,toVisit,wordList);
+            }
+            dst++;
+        }
+        return 0;
+    }
+    //从字典中删除本结点，并将该节点的所有邻居加入队列，然后从字典中删除所有邻居
+    void nextNeighbours(string word, queue<string>& toVisit, unordered_set<string>& wordList){
+        wordList.erase(word);
+        for(auto i = 0; i < word.size(); ++i){
+            char c = word[i];
+            for(int j = 0; j < 26; ++j){
+                word[i] = 'a' + j;
+                if(wordList.find(word)!=wordList.end()){
+                    toVisit.push(word);
+                    wordList.erase(word);
+                }
+            }
+            word[i] = c;
+        }
+    }
+};
