@@ -1,0 +1,24 @@
+/**
+  * https://leetcode.com/problems/maximum-product-subarray/
+  */
+
+public class Solution {
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        if(nums == null || n == 0) return 0;
+        int maxLast = nums[0];
+        int minLast = nums[0];
+        int maxCur = nums[0];
+        int minCur = nums[0];
+        int maxAll = nums[0];
+        //需要注意负数的情况
+        for(int i = 1; i < n; ++i){
+            maxCur = Math.max(nums[i],Math.max(nums[i]*maxLast,nums[i]*minLast));
+            minCur = Math.min(nums[i],Math.min(nums[i]*maxLast,nums[i]*minLast));
+            maxAll = Math.max(maxCur,maxAll);
+            maxLast = maxCur;
+            minLast = minCur;
+        }
+        return maxAll;
+    }
+}
